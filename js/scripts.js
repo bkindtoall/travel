@@ -36,10 +36,10 @@ Countries.prototype.deletePlace = function(id) {
 }
 
 // Business Logic for  places ---------
-function Place(country, city, date) {
-  this.country = country,
-  this.city = city,
-  this.date = date
+function Place(countryName, cityName, dateNumber) {
+  this.countryName = countryName,
+  this.cityName = cityName,
+  this.dateNumber = dateNumber
 };
 
 Place.prototype.vacation = function() {
@@ -62,7 +62,7 @@ function displayPlaceDetail(CountriesToDisplay) {
 
 
 function showPlace(placeId) {
-  var place = countries.findPlace(placeId);
+  var place = Countries.findPlace(placeId);
   $("#show-place").show();
   $(".country-name").html(place.countryName);
   $(".city-name").html(place.cityName);
@@ -85,13 +85,19 @@ $("#buttons").on("click", ".deleteButton", function() {
 };
 
 $(document).ready(function() {
-  $("form#new-contry").submit(function(event) {
+  $("form#new-country").submit(function(event) {
     event.preventDefault();
     var inputtedCountryName = $("input#new-country-name").val();
     var inputtedCityName = $("input#new-city-name").val();
-    var inputtedDatenumber = $("input#new-date-number").val();
-    var newInput = new Input (inputtedCountryName, inputtedCityName, inputtedDatenumber);
-    Countries.addContact(newInput);
+    var inputtedDateNumber = $("input#new-date-number").val();
+
+    $("input#new-country-name").val("");
+    $("input#new-city-name").val("");
+    $("input#new-date-number").val("");
+
+    var newPlace = new Place(inputtedCountryName, inputtedCityName, inputtedDateNumber);
+    Countries.addPlace(newPlace);
     displayPlaceDetail(Countries);
-  })
-})
+
+  });
+});
